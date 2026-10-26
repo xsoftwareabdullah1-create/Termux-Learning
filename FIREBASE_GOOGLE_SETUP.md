@@ -11,3 +11,11 @@
 9. Open Actions > Build Termux Learn > Run workflow, then select android, ios or all. Download APK/IPA from the run's Artifacts section.
 
 Never commit real .env files, service-account JSON, private keys or Apple certificates.
+
+## GitHub access-token safety
+
+A previous legacy workflow contained a hardcoded GitHub personal access token. The unsafe workflow file has been removed from the current branches, but deleting a file does not erase old Git history. Revoke that exposed token in GitHub Settings > Developer settings > Personal access tokens immediately. Do not reuse it. If a new token is needed for a separate integration, store it only as an Actions secret and never write it into YAML or source code.
+
+## Android build workflow
+
+The Android job now builds locally on the GitHub Actions Ubuntu runner using Java 17, Android command-line tools and Gradle. It does not require an Expo token. The APK is uploaded as the `Termux-Learn-Android-APK` artifact. iOS remains an EAS remote build and requires `EXPO_TOKEN` plus Apple signing credentials.

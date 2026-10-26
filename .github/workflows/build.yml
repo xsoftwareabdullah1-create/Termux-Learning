@@ -1,0 +1,55 @@
+name: Build Termux Learn
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Build target
+        required: true
+        type: choice
+        options: [android, ios, all]
+        default: android
+  push:
+    branches: [main]
+    paths: ['app/**','components/**','data/**','lib/**','package.json','app.json','eas.json','.github/workflows/build.yml']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm install
+      - run: npx tsc --noEmit
+      - run: npm install --global eas-cli
+      - name: Verify Expo token
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: test -n "$EXPO_TOKEN" || (echo "Add EXPO_TOKEN in repository Actions secrets" && exit 1)
+      - name: Build Android APK
+        if: github.event_name == 'push' || github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all'
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          eas build --platform android --profile preview --non-interactive --wait --json > android-build.json
+          URL=$(node -e "const x=require('./android-build.json'); console.log(x.artifacts?.buildUrl || x[0]?.artifacts?.buildUrl || '')")
+          test -n "$URL"
+          mkdir -p dist
+          curl -fL "$URL" -o dist/Termux-Learn.apk
+      - name: Build iOS IPA
+        if: github.event_name == 'workflow_dispatch' && (github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all')
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          eas build --platform ios --profile production --non-interactive --wait --json > ios-build.json
+          URL=$(node -e "const x=require('./ios-build.json'); console.log(x.artifacts?.buildUrl || x[0]?.artifacts?.buildUrl || '')")
+          test -n "$URL"
+          mkdir -p dist
+          curl -fL "$URL" -o dist/Termux-Learn.ipa
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('dist/*') != ''
+        with:
+          name: Termux-Learn-${{ github.run_number }}
+          path: dist/*
+          retention-days: 14

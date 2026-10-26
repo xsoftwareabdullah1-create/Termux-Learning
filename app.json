@@ -1,23 +1,9 @@
 {
-  "expo": {
-    "name": "Termux Learn",
-    "slug": "termux-learn",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "scheme": "termuxlearn",
-    "userInterfaceStyle": "dark",
-    "splash": {
-      "backgroundColor": "#0a0a0a"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "package": "com.yourname.termuxlearn",
-      "adaptiveIcon": {
-        "backgroundColor": "#0a0a0a"
-      }
-    },
-    "plugins": ["expo-router"]
-  }
+ "expo":{
+  "name":"Termux Learn","slug":"termux-learn","version":"1.1.0","orientation":"portrait","scheme":"termuxlearn",
+  "userInterfaceStyle":"dark","splash":{"backgroundColor":"#070d0b"},
+  "ios":{"supportsTablet":true,"bundleIdentifier":"com.xsoftwareabdullah1.termuxlearn"},
+  "android":{"package":"com.xsoftwareabdullah1.termuxlearn","adaptiveIcon":{"backgroundColor":"#070d0b"}},
+  "plugins":["expo-router"]
+ }
 }

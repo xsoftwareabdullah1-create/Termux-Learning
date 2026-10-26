@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Termux Learn",
+    "slug": "termux-learn",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "termuxlearn",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#0a0a0a"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.yourname.termuxlearn",
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0a0a"
+      }
+    },
+    "plugins": ["expo-router"]
+  }
+}

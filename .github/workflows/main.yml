@@ -4,11 +4,12 @@ on:
   workflow_dispatch: # Allows you to manually trigger the build on GitHub
   push:
     branches: [ main ] # Automatically triggers when code is pushed to the main branch
-
 jobs:
   build-android:
     name: Build Android APK
     runs-on: ubuntu-latest
+    env:
+      EXPO_TOKEN: ${{ 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 }}   # ✅ Correct: secrets at job level
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,6 +27,3 @@ jobs:
 
       - name: Build Android APK
         run: eas build --platform android --profile preview --non-interactive --no-wait
-        env:
-          EXPO_TOKEN: ${{  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  }}
-

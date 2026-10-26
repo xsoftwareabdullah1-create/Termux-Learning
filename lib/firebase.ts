@@ -14,9 +14,7 @@ const app = getApps().length ? getApp() : initializeApp(config);
 
 // Firebase's React Native runtime entry exports getReactNativePersistence, but
 // some Firebase 10.x TypeScript declarations resolve the web entry instead.
-const getNativePersistence = (FirebaseAuth as unknown as {
- getReactNativePersistence: (storage: typeof AsyncStorage) => FirebaseAuth.Persistence;
-}).getReactNativePersistence;
+const getNativePersistence = (FirebaseAuth as any).getReactNativePersistence;
 
 export const auth = (() => {
  try {

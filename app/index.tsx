@@ -55,7 +55,7 @@ export default function Home() {
    <View><Text style={styles.brand}>TERMUX <Text style={styles.blue}>LEARN</Text></Text><Text style={styles.subtitle}>COMMAND TRAINING SYSTEM</Text></View>
    <Pressable onPress={()=>setTab('settings')} style={styles.avatarButton}><Text style={styles.avatarText}>◉</Text></Pressable>
   </View>
-  {tab==='levels'&&<View style={styles.progressBox}><View style={styles.progressTop}><Text style={styles.progressText}>LEARNING PROGRESS</Text><Text style={styles.progressPercent}>{pct}%</Text></View><Text style={styles.progressSub}>{done.length} / {lessons.length} LEVELS COMPLETED</Text><View style={styles.track}><View style={[styles.fill,{width:pct+'%'}]}/></View></View>}
+  {tab==='levels'&&<View style={styles.progressBox}><View style={styles.progressTop}><Text style={styles.progressText}>LEARNING PROGRESS</Text><Text style={styles.progressPercent}>{pct}%</Text></View><Text style={styles.progressSub}>{done.length} / {lessons.length} LEVELS COMPLETED</Text><View style={styles.track}><View style={[styles.fill,{width:(pct+'%') as `${number}%`}]}/></View></View>}
   {tab==='levels'?renderLevels():tab==='settings'?renderSettings():tab==='terminal'?renderTerminal():renderHelp()}
   <View style={styles.nav}>{nav.map(n=><Pressable key={n.id} onPress={()=>setTab(n.id)} style={({pressed})=>[styles.navItem,tab===n.id&&styles.navActive,{opacity:pressed?.7:1}]}><Text style={[styles.navGlyph,tab===n.id&&styles.navSelected]}>{n.glyph}</Text><Text style={[styles.navLabel,tab===n.id&&styles.navSelected]}>{n.label}</Text></Pressable>)}</View>
  </View>;

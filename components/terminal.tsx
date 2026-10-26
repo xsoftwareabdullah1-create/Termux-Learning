@@ -3,7 +3,7 @@ import { View, TextInput, Text, ScrollView, StyleSheet, Pressable } from 'react-
 import type { Command } from '../data/lessons';
 
 type Props = { commands: Command[]; onAllComplete: () => void };
-const keys = ['ESC','CTRL','HOME','↑','↓','→','END','PGDN'];
+const keys = ['ESC','CTRL','HOME','←','↓','→','END','PGDN'];
 
 export default function Terminal({ commands, onAllComplete }: Props) {
  const [history,setHistory]=useState<string[]>(['TERMUX LEARN · PRACTICE TERMINAL','Type the exact lesson command and press Enter.','']);
@@ -17,9 +17,8 @@ export default function Terminal({ commands, onAllComplete }: Props) {
   else if(key==='CTRL'){setHistory(h=>[...h,'^C']);setInput('');}
   else if(key==='HOME')inputRef.current?.setNativeProps({selection:{start:0,end:0}});
   else if(key==='END')inputRef.current?.setNativeProps({selection:{start:input.length,end:input.length}});
-  else if(key==='↑')inputRef.current?.setNativeProps({selection:{start:0,end:0}});
-  else if(key==='↓')inputRef.current?.setNativeProps({selection:{start:input.length,end:input.length}});
-  else if(key==='→')inputRef.current?.focus();
+  else if(key==='←'||key==='↑')inputRef.current?.focus();
+  else if(key==='↓'||key==='→')inputRef.current?.focus();
   else if(key==='PGDN')scrollRef.current?.scrollToEnd({animated:true});
  };
  const handleSubmit=()=>{
@@ -42,21 +41,21 @@ export default function Terminal({ commands, onAllComplete }: Props) {
    {history.map((line,i)=><Text key={i} style={styles.line}>{line}</Text>)}
    {current&&<Text style={styles.hint}>NEXT COMMAND  ›  {current.command}</Text>}
   </ScrollView>
-  <View style={styles.keyRow}>{keys.map(key=><Pressable key={key} onPress={()=>pressKey(key)} style={({pressed})=>[styles.key,{transform:[{scale:pressed?.94:1}],borderColor:pressed?'#38f49b':'#365b48'}]}><Text style={styles.keyText}>{key}</Text></Pressable>)}</View>
+  <View style={styles.keyRow}>{keys.map(key=><Pressable key={key} onPress={()=>pressKey(key)} style={({pressed})=>[styles.key,{transform:[{scale:pressed?.94:1}],borderColor:pressed?'#54adff':'#31577d'}]}><Text style={styles.keyText}>{key}</Text></Pressable>)}</View>
   <View style={styles.inputRow}>
    <Text style={styles.prompt}>$</Text>
-   <TextInput ref={inputRef} style={styles.input} value={input} onChangeText={setInput} onSubmitEditing={handleSubmit} autoCapitalize="none" autoCorrect={false} placeholder="type a command..." placeholderTextColor="#607368" returnKeyType="send" blurOnSubmit={false}/>
+   <TextInput ref={inputRef} style={styles.input} value={input} onChangeText={setInput} onSubmitEditing={handleSubmit} autoCapitalize="none" autoCorrect={false} placeholder="type a command..." placeholderTextColor="#607b98" returnKeyType="send" blurOnSubmit={false}/>
    <Pressable onPress={handleSubmit} style={({pressed})=>[styles.send,{transform:[{scale:pressed?.94:1}]}]}><Text style={styles.sendText}>RUN</Text></Pressable>
   </View>
  </View>;
 }
 const styles=StyleSheet.create({
- wrap:{flex:1,backgroundColor:'#070d0b',borderTopWidth:1,borderTopColor:'#1c3328'},
+ wrap:{flex:1,backgroundColor:'#07111f',borderTopWidth:1,borderTopColor:'#1e3a56'},
  terminalHead:{height:38,flexDirection:'row',alignItems:'center',paddingHorizontal:12,borderBottomWidth:1,borderBottomColor:'#1c3328'},
- dot:{width:7,height:7,borderRadius:4,backgroundColor:'#38f49b',marginRight:8},headText:{color:'#9cb9a8',fontFamily:'monospace',fontSize:10,letterSpacing:1,flex:1},counter:{color:'#38f49b',fontFamily:'monospace',fontSize:11},
- output:{flex:1,padding:12},line:{color:'#b8f5ce',fontFamily:'monospace',fontSize:12,marginBottom:5},hint:{color:'#38f49b',fontFamily:'monospace',fontSize:11,marginTop:12},
+ dot:{width:7,height:7,borderRadius:4,backgroundColor:'#38f49b',marginRight:8},headText:{color:'#91a9c2',fontFamily:'monospace',fontSize:10,letterSpacing:1,flex:1},counter:{color:'#38f49b',fontFamily:'monospace',fontSize:11},
+ output:{flex:1,padding:12},line:{color:'#c5e4ff',fontFamily:'monospace',fontSize:12,marginBottom:5},hint:{color:'#38f49b',fontFamily:'monospace',fontSize:11,marginTop:12},
  keyRow:{flexDirection:'row',flexWrap:'wrap',justifyContent:'space-between',paddingHorizontal:7,paddingVertical:7,borderTopWidth:1,borderTopColor:'#1c3328',gap:5},
- key:{minWidth:35,flexGrow:1,alignItems:'center',justifyContent:'center',paddingVertical:9,paddingHorizontal:5,borderWidth:1,borderRadius:7,backgroundColor:'#0c1711'},keyText:{color:'#b8f5ce',fontFamily:'monospace',fontSize:10,fontWeight:'800'},
+ key:{minWidth:35,flexGrow:1,alignItems:'center',justifyContent:'center',paddingVertical:9,paddingHorizontal:5,borderWidth:1,borderRadius:7,backgroundColor:'#0c1b2c'},keyText:{color:'#b8f5ce',fontFamily:'monospace',fontSize:10,fontWeight:'800'},
  inputRow:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:10,borderTopWidth:1,borderTopColor:'#1c3328'},
- prompt:{color:'#38f49b',fontFamily:'monospace',marginRight:8,fontSize:16},input:{flex:1,color:'#eafff2',fontFamily:'monospace',fontSize:13,padding:8},send:{borderWidth:1,borderColor:'#38f49b',borderRadius:8,paddingHorizontal:14,paddingVertical:9,marginLeft:6},sendText:{color:'#54f9a8',fontFamily:'monospace',fontWeight:'900',fontSize:11}
+ prompt:{color:'#38f49b',fontFamily:'monospace',marginRight:8,fontSize:16},input:{flex:1,color:'#eff7ff',fontFamily:'monospace',fontSize:13,padding:8},send:{borderWidth:1,borderColor:'#38f49b',borderRadius:8,paddingHorizontal:14,paddingVertical:9,marginLeft:6},sendText:{color:'#80c4ff',fontFamily:'monospace',fontWeight:'900',fontSize:11}
 });

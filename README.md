@@ -26,6 +26,10 @@ A mobile-first Termux learning app, from first terminal commands to advanced she
 
 ## App features
 
+- Sketch-inspired blue login screen with email/password, password visibility toggle, Google sign-in and level/mastery indicators
+- Four-tab mobile learning hub: Level, Settings, Terminal and Help
+- Terminal lesson screen with mobile shortcut keys (ESC, CTRL, HOME, arrows, END, PGDN) and outlined RUN button
+
 - Firebase email/password and Google sign-in (requires Firebase and OAuth setup)
 - Beginner, intermediate and advanced command exercises with hints
 - Simulated terminal with shortcut-key strip and run control
